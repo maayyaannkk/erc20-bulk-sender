@@ -1,0 +1,28 @@
+{
+  "name": "erc20-bulk-sender",
+  "version": "1.0.0",
+  "description": "Bulk sender for erc20 tokens with multichain support",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maayyaannkk/erc20-bulk-sender.git"
+  },
+  "bugs": {
+    "url": "https://github.com/maayyaannkk/erc20-bulk-sender/issues"
+  },
+  "homepage": "https://github.com/maayyaannkk/erc20-bulk-sender#readme",
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.8.3",
+    "dotenv": "^16.0.3",
+    "hardhat": "^2.14.0"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.2"
+  }
+}
