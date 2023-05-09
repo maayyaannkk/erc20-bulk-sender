@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import { useState } from 'react';
 import { BigNumber, ethers } from 'ethers';
-import { supportedNetworks, contractAddress } from './utils/Util';
+import { supportedNetworks, contractAddress, objectFromInputString, getSupportedNetworks } from './utils/Util';
 import erc20abi from './utils/erc20.abi.json';
 import BulkTransferAbi from './utils/BulkTransfer.abi.json'
 
@@ -80,8 +80,8 @@ function App() {
     const formJson = Object.fromEntries(formData.entries());
     const tokenAddresses = formJson.addresses;
 
-    if (objectFromInputString(tokenAddresses)) {
-      const [addresses, amounts, total] = objectFromInputString(tokenAddresses);
+    if (objectFromInputString(tokenAddresses,token.decimal)) {
+      const [addresses, amounts, total] = objectFromInputString(tokenAddresses,token.decimal);
       const parsedData = { addresses: addresses, amounts: amounts, total: total }
       if (BigNumber.from(parsedData.total._hex).gt(BigNumber.from(token.balance._hex)))
         setParsedData(null)
@@ -89,37 +89,6 @@ function App() {
         setParsedData(parsedData);
     } else
       setParsedData(null);
-  }
-
-  const objectFromInputString = (inputString) => {
-    const regex = /^(0x[a-fA-F0-9]{1,},\s*\d+(\.\d{1,18})?\n?)+$/;
-
-    if (!regex.test(inputString)) {
-      console.log('Invalid input string format'); return;
-    }
-
-    const lines = inputString.trim().split('\n');
-    const addresses = [];
-    const amounts = [];
-    var total = BigNumber.from("0");
-    const addressIndexMap = {};
-
-    for (const line of lines) {
-      const [address, amount] = line.split(',').map((str) => str.trim());
-      const parsedAmount = BigNumber.from(ethers.utils.parseUnits(amount, token.decimal));
-      total = total.add(parsedAmount);
-
-      if (addressIndexMap[address] > -1) {
-        const existingIndex = addressIndexMap[address];
-        amounts[existingIndex] = amounts[existingIndex].add(parsedAmount);
-      } else {
-        addresses.push(address);
-        amounts.push(parsedAmount);
-        addressIndexMap[address] = addresses.length - 1;
-      }
-    }
-
-    return [addresses, amounts, total];
   }
 
   function bulkSendTokens() {
@@ -162,13 +131,6 @@ function App() {
   window.ethereum.on("chainChanged", () => connectWallet());
   window.ethereum.on("disconnect", () => logout());
   function logout() { setProvider(null); setProviderAddress(""); setNetworkId(0); }
-  function getSupportedNetworks() {
-    const arr = [];
-    for (const property in supportedNetworks) {
-      arr.push(supportedNetworks[property]);
-    }
-    return arr;
-  }
 
   return (
     <div>
