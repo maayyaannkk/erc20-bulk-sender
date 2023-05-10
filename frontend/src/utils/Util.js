@@ -1,13 +1,13 @@
 import { BigNumber, ethers } from 'ethers';
 export const supportedNetworks = {
-    1: "Ethereum Mainnet",
     5: "Goerli test network",
     11155111: "Sepolia test network",
-    59140: "Linea Goerli test network",
     137: "Polygon Mainnet"
 }
 export const contractAddress = {
-    11155111: "0xEE221EcE6dB9F72Fef5F17E22493558d6F3f0225"
+    11155111: "0xEE221EcE6dB9F72Fef5F17E22493558d6F3f0225",
+    5: "0x9c9da90542487ae267B7902EB349f1F2DF676d56",
+    137: "0x0199968F50978C0360E393A507cEd5B7D0AaD515"
 }
 export function getSupportedNetworks() {
     const arr = [];

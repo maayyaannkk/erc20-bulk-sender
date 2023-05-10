@@ -23,7 +23,8 @@ function App() {
   const [loadingTokenSend, setLoadingTokenSend] = useState(false);
 
   const connectWallet = async () => {
-    if (providerAddress) { logout(); return; }
+    logout();
+    if (providerAddress) { return; }
     if (window.ethereum) {
       try {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -157,7 +158,7 @@ function App() {
   window.ethereum.on("accountsChanged", () => connectWallet());
   window.ethereum.on("chainChanged", () => connectWallet());
   window.ethereum.on("disconnect", () => logout());
-  function logout() { setProvider(null); setProviderAddress(""); setNetworkId(0); }
+  function logout() { setProvider(null); setProviderAddress(""); setNetworkId(0); setToken(null); setParsedData(null); }
 
   return (
     <div className="App">
