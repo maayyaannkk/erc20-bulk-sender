@@ -17,6 +17,10 @@ module.exports = {
     polygon: {
       url: process.env.ALCHEMY_POLYGON_URL,
       accounts: [process.env.PRIVATE_KEY]
+    },
+    base : {
+      url: process.env.ALCHEMY_BASE_URL,
+      accounts: [process.env.PRIVATE_KEY]
     }
   }
 };
